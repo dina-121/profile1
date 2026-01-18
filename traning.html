@@ -1,0 +1,1181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nexus AI | Image & Video Generation</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-dark: #0a0a0f;
+            --secondary-dark: #1a1a24;
+            --card-dark: #232330;
+            --accent-purple: #8a2be2;
+            --accent-blue: #3d9eff;
+            --accent-gold: #ffd700;
+            --text-primary: #f0f0f0;
+            --text-secondary: #b0b0c0;
+            --border-radius: 12px;
+            --transition-speed: 0.3s;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--primary-dark);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Layout */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header & Navigation */
+        header {
+            background-color: rgba(10, 10, 15, 0.95);
+            backdrop-filter: blur(10px);
+            position: fixed;
+            width: 100%;
+            z-index: 1000;
+            padding: 1rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            background: linear-gradient(to right, var(--accent-purple), var(--accent-blue));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo i {
+            font-size: 2rem;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-link {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color var(--transition-speed);
+            position: relative;
+        }
+
+        .nav-link:hover {
+            color: var(--text-primary);
+        }
+
+        .nav-link.active {
+            color: var(--accent-purple);
+        }
+
+        .nav-link.active::after {
+            content: '';
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            background-color: var(--accent-purple);
+            border-radius: 50%;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .auth-buttons {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .btn {
+            padding: 0.6rem 1.5rem;
+            border-radius: var(--border-radius);
+            font-weight: 600;
+            cursor: pointer;
+            transition: all var(--transition-speed);
+            border: none;
+            font-size: 0.95rem;
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--text-primary);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .btn-outline:hover {
+            border-color: var(--accent-purple);
+            color: var(--accent-purple);
+            transform: translateY(-2px);
+        }
+
+        .btn-primary {
+            background: linear-gradient(to right, var(--accent-purple), var(--accent-blue));
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(138, 43, 226, 0.3);
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 10rem 0 6rem;
+            text-align: center;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(to right, var(--text-primary), var(--accent-blue));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            line-height: 1.2;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            max-width: 700px;
+            margin: 0 auto 3rem;
+        }
+
+        /* Main Content */
+        .content-wrapper {
+            display: flex;
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .left-panel {
+            flex: 3;
+        }
+
+        .right-panel {
+            flex: 2;
+        }
+
+        /* Prompt Input */
+        .prompt-section {
+            background-color: var(--secondary-dark);
+            border-radius: var(--border-radius);
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .section-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.3rem;
+            margin-bottom: 1.5rem;
+            color: var(--text-primary);
+        }
+
+        .section-title i {
+            color: var(--accent-purple);
+        }
+
+        .prompt-input {
+            width: 100%;
+            min-height: 180px;
+            background-color: var(--card-dark);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            font-size: 1rem;
+            color: var(--text-primary);
+            resize: vertical;
+            font-family: 'Inter', sans-serif;
+            transition: border-color var(--transition-speed);
+        }
+
+        .prompt-input:focus {
+            outline: none;
+            border-color: var(--accent-purple);
+        }
+
+        .prompt-input::placeholder {
+            color: var(--text-secondary);
+        }
+
+        .prompt-actions {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 1rem;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        .char-count {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        /* Options Panel */
+        .options-panel {
+            background-color: var(--secondary-dark);
+            border-radius: var(--border-radius);
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .option-group {
+            margin-bottom: 2rem;
+        }
+
+        .option-title {
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .option-title i {
+            color: var(--accent-blue);
+        }
+
+        .option-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+        }
+
+        .option-btn {
+            padding: 0.7rem 1.2rem;
+            background-color: var(--card-dark);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all var(--transition-speed);
+            flex: 1;
+            min-width: 120px;
+            text-align: center;
+        }
+
+        .option-btn:hover {
+            border-color: var(--accent-blue);
+            color: var(--text-primary);
+        }
+
+        .option-btn.active {
+            background-color: rgba(61, 158, 255, 0.1);
+            border-color: var(--accent-blue);
+            color: var(--accent-blue);
+        }
+
+        .aspect-ratios {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0.8rem;
+        }
+
+        .aspect-ratio {
+            padding: 1rem;
+            background-color: var(--card-dark);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            text-align: center;
+            cursor: pointer;
+            transition: all var(--transition-speed);
+        }
+
+        .aspect-ratio:hover {
+            border-color: var(--accent-blue);
+            color: var(--text-primary);
+        }
+
+        .aspect-ratio.active {
+            background-color: rgba(61, 158, 255, 0.1);
+            border-color: var(--accent-blue);
+            color: var(--accent-blue);
+        }
+
+        .aspect-icon {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Generate Button */
+        .generate-btn-container {
+            text-align: center;
+            margin: 3rem 0;
+        }
+
+        .generate-btn {
+            padding: 1.2rem 3rem;
+            font-size: 1.2rem;
+            background: linear-gradient(to right, var(--accent-purple), var(--accent-blue));
+            color: white;
+            border: none;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            transition: all var(--transition-speed);
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            box-shadow: 0 10px 25px rgba(138, 43, 226, 0.3);
+        }
+
+        .generate-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(138, 43, 226, 0.4);
+        }
+
+        .generate-btn:active {
+            transform: translateY(-2px);
+        }
+
+        .loading {
+            display: none;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .spinner {
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-top-color: white;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* Results Section */
+        .results-section {
+            background-color: var(--secondary-dark);
+            border-radius: var(--border-radius);
+            padding: 2rem;
+            margin-bottom: 4rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .result-placeholder {
+            background-color: var(--card-dark);
+            border-radius: var(--border-radius);
+            height: 400px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: var(--text-secondary);
+            border: 2px dashed rgba(255, 255, 255, 0.1);
+        }
+
+        .result-placeholder i {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            color: rgba(255, 255, 255, 0.1);
+        }
+
+        .result-image {
+            width: 100%;
+            border-radius: var(--border-radius);
+            display: none;
+            max-height: 500px;
+            object-fit: contain;
+        }
+
+        .result-actions {
+            display: flex;
+            justify-content: center;
+            margin-top: 2rem;
+            gap: 1rem;
+        }
+
+        .download-btn {
+            padding: 0.8rem 2rem;
+            background-color: var(--card-dark);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: var(--border-radius);
+            color: var(--text-primary);
+            cursor: pointer;
+            transition: all var(--transition-speed);
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 600;
+        }
+
+        .download-btn:hover {
+            background-color: var(--accent-purple);
+            transform: translateY(-3px);
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background-color: var(--secondary-dark);
+            border-radius: var(--border-radius);
+            width: 90%;
+            max-width: 500px;
+            padding: 2.5rem;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .modal-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            background: linear-gradient(to right, var(--accent-purple), var(--accent-blue));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .close-modal {
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: color var(--transition-speed);
+        }
+
+        .close-modal:hover {
+            color: var(--text-primary);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--text-secondary);
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 1rem;
+            background-color: var(--card-dark);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            color: var(--text-primary);
+            font-size: 1rem;
+            transition: border-color var(--transition-speed);
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--accent-purple);
+        }
+
+        .form-footer {
+            text-align: center;
+            margin-top: 2rem;
+            color: var(--text-secondary);
+        }
+
+        .form-link {
+            color: var(--accent-blue);
+            text-decoration: none;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .form-link:hover {
+            text-decoration: underline;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--secondary-dark);
+            padding: 3rem 0;
+            margin-top: 4rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 2rem;
+        }
+
+        .footer-logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: linear-gradient(to right, var(--accent-purple), var(--accent-blue));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .footer-link {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color var(--transition-speed);
+        }
+
+        .footer-link:hover {
+            color: var(--accent-purple);
+        }
+
+        .copyright {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            width: 100%;
+            text-align: center;
+            margin-top: 2rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .content-wrapper {
+                flex-direction: column;
+            }
+            
+            .hero h1 {
+                font-size: 2.8rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .hero {
+                padding: 8rem 0 4rem;
+            }
+            
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+            
+            .hero p {
+                font-size: 1rem;
+            }
+            
+            .option-buttons {
+                flex-direction: column;
+            }
+            
+            .aspect-ratios {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .generate-btn {
+                width: 100%;
+                justify-content: center;
+            }
+            
+            .footer-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .footer-links {
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero h1 {
+                font-size: 1.8rem;
+            }
+            
+            .prompt-section, .options-panel, .results-section {
+                padding: 1.5rem;
+            }
+            
+            .aspect-ratios {
+                grid-template-columns: 1fr;
+            }
+            
+            .modal-content {
+                padding: 1.5rem;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.5s ease-out forwards;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <nav class="navbar">
+                <div class="logo">
+                    <i class="fas fa-robot"></i>
+                    <span>Nexus AI</span>
+                </div>
+                <div class="nav-links">
+                    <a href="#" class="nav-link active">Generate</a>
+                    <a href="#" class="nav-link">Gallery</a>
+                    <a href="#" class="nav-link">Pricing</a>
+                    <a href="#" class="nav-link">Docs</a>
+                    <div class="auth-buttons">
+                        <button class="btn btn-outline" id="loginBtn">Login</button>
+                        <button class="btn btn-primary" id="registerBtn">Sign Up</button>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h1>Transform Your Ideas Into Stunning Visuals</h1>
+            <p>Nexus AI uses cutting-edge artificial intelligence to generate high-quality images and videos from text descriptions. Perfect for content creators, designers, and marketing agencies.</p>
+            <div class="auth-buttons">
+                <button class="btn btn-primary" id="heroTryBtn">Try It Free</button>
+                <button class="btn btn-outline">View Examples</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="container">
+        <div class="content-wrapper">
+            <!-- Left Panel: Prompt Input & Results -->
+            <div class="left-panel">
+                <!-- Prompt Input -->
+                <section class="prompt-section fade-in">
+                    <h2 class="section-title">
+                        <i class="fas fa-keyboard"></i>
+                        <span>Describe Your Vision</span>
+                    </h2>
+                    <textarea class="prompt-input" id="promptInput" placeholder="Enter a detailed description of the image or video you want to generate. Be as specific as possible for the best results...">A majestic eagle soaring over a futuristic city at sunset, cinematic lighting, hyper-realistic, 8K resolution</textarea>
+                    <div class="prompt-actions">
+                        <div class="char-count">
+                            <i class="fas fa-text-height"></i>
+                            <span id="charCount">98 characters</span>
+                        </div>
+                        <div>
+                            <i class="fas fa-lightbulb"></i>
+                            <span>Tip: Include details like style, mood, and composition</span>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Results Section -->
+                <section class="results-section fade-in">
+                    <h2 class="section-title">
+                        <i class="fas fa-images"></i>
+                        <span>Generated Result</span>
+                    </h2>
+                    <div id="resultContainer">
+                        <div class="result-placeholder" id="resultPlaceholder">
+                            <i class="fas fa-image"></i>
+                            <p>Your generated image or video will appear here</p>
+                            <p>Click "Generate" to create your first AI artwork</p>
+                        </div>
+                        <img src="" alt="Generated Image" class="result-image" id="resultImage">
+                    </div>
+                    <div class="result-actions">
+                        <button class="download-btn" id="downloadBtn">
+                            <i class="fas fa-download"></i>
+                            <span>Download HD</span>
+                        </button>
+                        <button class="download-btn">
+                            <i class="fas fa-share"></i>
+                            <span>Share</span>
+                        </button>
+                        <button class="download-btn">
+                            <i class="fas fa-sync-alt"></i>
+                            <span>Regenerate</span>
+                        </button>
+                    </div>
+                </section>
+            </div>
+
+            <!-- Right Panel: Options -->
+            <div class="right-panel">
+                <!-- Options Panel -->
+                <section class="options-panel fade-in">
+                    <!-- Generate Type -->
+                    <div class="option-group">
+                        <h3 class="option-title">
+                            <i class="fas fa-cube"></i>
+                            <span>Generate Type</span>
+                        </h3>
+                        <div class="option-buttons">
+                            <button class="option-btn active" data-type="image">
+                                <i class="fas fa-image"></i>
+                                <span>Image</span>
+                            </button>
+                            <button class="option-btn" data-type="video">
+                                <i class="fas fa-video"></i>
+                                <span>Video</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Style Selection -->
+                    <div class="option-group">
+                        <h3 class="option-title">
+                            <i class="fas fa-palette"></i>
+                            <span>Style</span>
+                        </h3>
+                        <div class="option-buttons">
+                            <button class="option-btn active" data-style="realistic">Realistic</button>
+                            <button class="option-btn" data-style="cartoon">Cartoon</button>
+                            <button class="option-btn" data-style="cinematic">Cinematic</button>
+                            <button class="option-btn" data-style="gulf">Gulf Style</button>
+                            <button class="option-btn" data-style="artistic">Artistic</button>
+                        </div>
+                    </div>
+
+                    <!-- Aspect Ratio -->
+                    <div class="option-group">
+                        <h3 class="option-title">
+                            <i class="fas fa-expand-alt"></i>
+                            <span>Aspect Ratio</span>
+                        </h3>
+                        <div class="aspect-ratios">
+                            <div class="aspect-ratio active" data-ratio="1:1">
+                                <div class="aspect-icon">
+                                    <i class="fas fa-square"></i>
+                                </div>
+                                <span>Square (1:1)</span>
+                            </div>
+                            <div class="aspect-ratio" data-ratio="16:9">
+                                <div class="aspect-icon">
+                                    <i class="fas fa-desktop"></i>
+                                </div>
+                                <span>Widescreen (16:9)</span>
+                            </div>
+                            <div class="aspect-ratio" data-ratio="4:3">
+                                <div class="aspect-icon">
+                                    <i class="fas fa-tablet-alt"></i>
+                                </div>
+                                <span>Standard (4:3)</span>
+                            </div>
+                            <div class="aspect-ratio" data-ratio="9:16">
+                                <div class="aspect-icon">
+                                    <i class="fas fa-mobile-alt"></i>
+                                </div>
+                                <span>Vertical (9:16)</span>
+                            </div>
+                            <div class="aspect-ratio" data-ratio="3:2">
+                                <div class="aspect-icon">
+                                    <i class="fas fa-camera"></i>
+                                </div>
+                                <span>Photo (3:2)</span>
+                            </div>
+                            <div class="aspect-ratio" data-ratio="21:9">
+                                <div class="aspect-icon">
+                                    <i class="fas fa-film"></i>
+                                </div>
+                                <span>Cinematic (21:9)</span>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Advanced Options (Collapsed by default) -->
+                <section class="options-panel fade-in">
+                    <h3 class="option-title">
+                        <i class="fas fa-sliders-h"></i>
+                        <span>Advanced Options</span>
+                    </h3>
+                    <div class="option-buttons">
+                        <button class="option-btn">
+                            <i class="fas fa-seedling"></i>
+                            <span>Seed Control</span>
+                        </button>
+                        <button class="option-btn">
+                            <i class="fas fa-adjust"></i>
+                            <span>Guidance Scale</span>
+                        </button>
+                    </div>
+                </section>
+            </div>
+        </div>
+
+        <!-- Generate Button -->
+        <div class="generate-btn-container">
+            <button class="generate-btn" id="generateBtn">
+                <i class="fas fa-magic"></i>
+                <span>Generate AI Content</span>
+                <div class="loading" id="loadingIndicator">
+                    <div class="spinner"></div>
+                    <span>Processing...</span>
+                </div>
+            </button>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">Nexus AI</div>
+                <div class="footer-links">
+                    <a href="#" class="footer-link">Terms of Service</a>
+                    <a href="#" class="footer-link">Privacy Policy</a>
+                    <a href="#" class="footer-link">Contact</a>
+                    <a href="#" class="footer-link">Careers</a>
+                </div>
+                <div class="copyright">
+                    &copy; 2023 Nexus AI. All rights reserved. Powered by cutting-edge AI technology.
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Login Modal -->
+    <div class="modal" id="loginModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">Sign In to Nexus AI</h2>
+                <button class="close-modal" id="closeLoginModal">&times;</button>
+            </div>
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="loginEmail" class="form-label">Email Address</label>
+                    <input type="email" id="loginEmail" class="form-input" placeholder="Enter your email" required>
+                </div>
+                <div class="form-group">
+                    <label for="loginPassword" class="form-label">Password</label>
+                    <input type="password" id="loginPassword" class="form-input" placeholder="Enter your password" required>
+                </div>
+                <button type="submit" class="btn btn-primary" style="width: 100%; padding: 1rem;">Sign In</button>
+            </form>
+            <div class="form-footer">
+                <p>Don't have an account? <a class="form-link" id="switchToRegister">Sign up here</a></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Register Modal -->
+    <div class="modal" id="registerModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">Create Account</h2>
+                <button class="close-modal" id="closeRegisterModal">&times;</button>
+            </div>
+            <form id="registerForm">
+                <div class="form-group">
+                    <label for="registerName" class="form-label">Full Name</label>
+                    <input type="text" id="registerName" class="form-input" placeholder="Enter your full name" required>
+                </div>
+                <div class="form-group">
+                    <label for="registerEmail" class="form-label">Email Address</label>
+                    <input type="email" id="registerEmail" class="form-input" placeholder="Enter your email" required>
+                </div>
+                <div class="form-group">
+                    <label for="registerPassword" class="form-label">Password</label>
+                    <input type="password" id="registerPassword" class="form-input" placeholder="Create a password" required>
+                </div>
+                <div class="form-group">
+                    <label for="registerConfirmPassword" class="form-label">Confirm Password</label>
+                    <input type="password" id="registerConfirmPassword" class="form-input" placeholder="Confirm your password" required>
+                </div>
+                <button type="submit" class="btn btn-primary" style="width: 100%; padding: 1rem;">Create Account</button>
+            </form>
+            <div class="form-footer">
+                <p>Already have an account? <a class="form-link" id="switchToLogin">Sign in here</a></p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // DOM Elements
+        const promptInput = document.getElementById('promptInput');
+        const charCount = document.getElementById('charCount');
+        const generateBtn = document.getElementById('generateBtn');
+        const loadingIndicator = document.getElementById('loadingIndicator');
+        const resultPlaceholder = document.getElementById('resultPlaceholder');
+        const resultImage = document.getElementById('resultImage');
+        const downloadBtn = document.getElementById('downloadBtn');
+        
+        // Option buttons
+        const optionButtons = document.querySelectorAll('.option-btn');
+        const aspectRatios = document.querySelectorAll('.aspect-ratio');
+        
+        // Modals
+        const loginBtn = document.getElementById('loginBtn');
+        const registerBtn = document.getElementById('registerBtn');
+        const heroTryBtn = document.getElementById('heroTryBtn');
+        const loginModal = document.getElementById('loginModal');
+        const registerModal = document.getElementById('registerModal');
+        const closeLoginModal = document.getElementById('closeLoginModal');
+        const closeRegisterModal = document.getElementById('closeRegisterModal');
+        const switchToRegister = document.getElementById('switchToRegister');
+        const switchToLogin = document.getElementById('switchToLogin');
+
+        // Update character count
+        promptInput.addEventListener('input', function() {
+            const count = promptInput.value.length;
+            charCount.textContent = `${count} characters`;
+            
+            // Change color if approaching limit
+            if (count > 500) {
+                charCount.style.color = '#ff6b6b';
+            } else if (count > 300) {
+                charCount.style.color = '#ffd700';
+            } else {
+                charCount.style.color = 'var(--text-secondary)';
+            }
+        });
+
+        // Initialize character count
+        promptInput.dispatchEvent(new Event('input'));
+
+        // Option button selection
+        optionButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const parent = this.parentElement;
+                const isStyleSelection = this.hasAttribute('data-style');
+                
+                if (isStyleSelection) {
+                    // For style buttons, only one can be active
+                    parent.querySelectorAll('.option-btn').forEach(btn => {
+                        btn.classList.remove('active');
+                    });
+                } else if (this.hasAttribute('data-type')) {
+                    // For type buttons, only one can be active
+                    parent.querySelectorAll('.option-btn').forEach(btn => {
+                        btn.classList.remove('active');
+                    });
+                }
+                
+                this.classList.add('active');
+            });
+        });
+
+        // Aspect ratio selection
+        aspectRatios.forEach(ratio => {
+            ratio.addEventListener('click', function() {
+                aspectRatios.forEach(r => r.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+
+        // Generate button click simulation
+        generateBtn.addEventListener('click', function() {
+            // Show loading state
+            this.querySelector('span').style.display = 'none';
+            loadingIndicator.style.display = 'flex';
+            this.disabled = true;
+            
+            // Simulate AI generation process
+            setTimeout(() => {
+                // Hide loading
+                this.querySelector('span').style.display = 'inline';
+                loadingIndicator.style.display = 'none';
+                this.disabled = false;
+                
+                // Show generated image
+                resultPlaceholder.style.display = 'none';
+                resultImage.src = 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80';
+                resultImage.style.display = 'block';
+                
+                // Enable download button
+                downloadBtn.disabled = false;
+                
+                // Show success message
+                showNotification('Image generated successfully!', 'success');
+            }, 3000);
+        });
+
+        // Download button functionality
+        downloadBtn.addEventListener('click', function() {
+            if (resultImage.style.display === 'block') {
+                showNotification('Download started!', 'success');
+                // In a real app, this would trigger an actual download
+            } else {
+                showNotification('Please generate an image first', 'error');
+            }
+        });
+
+        // Modal functionality
+        loginBtn.addEventListener('click', () => openModal(loginModal));
+        registerBtn.addEventListener('click', () => openModal(registerModal));
+        heroTryBtn.addEventListener('click', () => openModal(registerModal));
+        
+        closeLoginModal.addEventListener('click', () => closeModal(loginModal));
+        closeRegisterModal.addEventListener('click', () => closeModal(registerModal));
+        
+        switchToRegister.addEventListener('click', () => {
+            closeModal(loginModal);
+            openModal(registerModal);
+        });
+        
+        switchToLogin.addEventListener('click', () => {
+            closeModal(registerModal);
+            openModal(loginModal);
+        });
+
+        // Close modals when clicking outside
+        window.addEventListener('click', (e) => {
+            if (e.target === loginModal) closeModal(loginModal);
+            if (e.target === registerModal) closeModal(registerModal);
+        });
+
+        // Form submissions
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            showNotification('Login successful!', 'success');
+            closeModal(loginModal);
+        });
+
+        document.getElementById('registerForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            showNotification('Account created successfully!', 'success');
+            closeModal(registerModal);
+        });
+
+        // Modal helper functions
+        function openModal(modal) {
+            modal.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal(modal) {
+            modal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        // Notification system
+        function showNotification(message, type) {
+            // Create notification element
+            const notification = document.createElement('div');
+            notification.className = `notification ${type}`;
+            notification.textContent = message;
+            notification.style.cssText = `
+                position: fixed;
+                top: 100px;
+                right: 20px;
+                padding: 1rem 1.5rem;
+                border-radius: var(--border-radius);
+                font-weight: 600;
+                z-index: 3000;
+                animation: slideIn 0.3s ease-out;
+                background-color: ${type === 'success' ? 'rgba(46, 204, 113, 0.9)' : 'rgba(231, 76, 60, 0.9)'};
+                color: white;
+                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            `;
+            
+            document.body.appendChild(notification);
+            
+            // Remove notification after 3 seconds
+            setTimeout(() => {
+                notification.style.animation = 'slideOut 0.3s ease-out forwards';
+                setTimeout(() => {
+                    document.body.removeChild(notification);
+                }, 300);
+            }, 3000);
+        }
+
+        // Add CSS for notification animations
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes slideIn {
+                from {
+                    transform: translateX(100%);
+                    opacity: 0;
+                }
+                to {
+                    transform: translateX(0);
+                    opacity: 1;
+                }
+            }
+            
+            @keyframes slideOut {
+                from {
+                    transform: translateX(0);
+                    opacity: 1;
+                }
+                to {
+                    transform: translateX(100%);
+                    opacity: 0;
+                }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>

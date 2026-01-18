@@ -1,0 +1,1663 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>دينا محمد - مطورة واجهات أمامية | Dina Mohamed - Front-End Developer Portfolio</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #9333ea;
+            --primary-dark: #7c3aed;
+            --secondary-color: #f8fafc;
+            --text-dark: #1e293b;
+            --text-light: #64748b;
+            --white: #ffffff;
+            --whatsapp-green: #25d366;
+            --whatsapp-dark: #128C7E;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+
+        html {
+            scroll-behavior: smooth;
+            overflow-x: hidden;
+            width: 100%;
+            max-width: 100%;
+        }
+
+        body {
+            font-family: 'Cairo', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            background: linear-gradient(to bottom, #f8fafc, #f1f5f9);
+            overflow-x: hidden;
+            width: 100%;
+            max-width: 100%;
+            position: relative;
+        }
+
+        /* إصلاح مشكلة التمرير الأفقي */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+            width: 100%;
+            overflow: hidden;
+        }
+
+        /* Language Switch Button */
+        .language-switch {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            right: auto;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 10px 16px;
+            border-radius: 50px;
+            box-shadow: var(--shadow-lg);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(147, 51, 234, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        body[dir="ltr"] .language-switch {
+            left: auto;
+            right: 20px;
+        }
+
+        /* Section Headers */
+        .section-header {
+            text-align: center;
+            margin-bottom: 3rem;
+            width: 100%;
+        }
+
+        .section-header h2 {
+            font-size: clamp(1.75rem, 4vw, 2.5rem);
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--text-dark);
+            word-break: break-word;
+        }
+
+        .section-header .text-white {
+            color: var(--white);
+        }
+
+        .section-divider {
+            width: 5rem;
+            height: 0.25rem;
+            background: var(--primary-color);
+            margin: 0 auto 1rem;
+            border-radius: 9999px;
+        }
+
+        .section-description {
+            max-width: 42rem;
+            margin: 0 auto;
+            color: var(--text-light);
+            font-size: clamp(0.9rem, 2vw, 1.125rem);
+            line-height: 1.8;
+            padding: 0 0.5rem;
+            word-break: break-word;
+        }
+
+        /* Buttons */
+        .btn {
+            padding: 0.875rem 1.5rem;
+            border: none;
+            border-radius: 0.5rem;
+            font-size: clamp(0.875rem, 2vw, 1rem);
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            min-width: 120px;
+            width: auto;
+            white-space: nowrap;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+            color: var(--white);
+            box-shadow: 0 4px 15px rgba(147, 51, 234, 0.3);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--white);
+            border: 2px solid rgba(192, 132, 252, 0.8);
+        }
+
+        /* Hero Section - إصلاح للهواتف */
+        .hero-section {
+            position: relative;
+            min-height: 100vh;
+            height: auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            background-image: url('https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=2072&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            padding: 1rem;
+            width: 100%;
+        }
+
+        .hero-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to bottom right, rgba(15, 23, 42, 0.95), rgba(88, 28, 135, 0.85), rgba(15, 23, 42, 0.95));
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            padding: 0 0.5rem;
+            width: 100%;
+            max-width: 56rem;
+            margin: 0 auto;
+        }
+
+        .hero-name {
+            color: var(--white);
+            font-size: clamp(2rem, 6vw, 4rem);
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+            line-height: 1.2;
+            word-break: break-word;
+        }
+
+        .hero-title {
+            color: #e9d5ff;
+            font-size: clamp(1.25rem, 3vw, 2rem);
+            margin-bottom: 1rem;
+            font-weight: 600;
+            line-height: 1.3;
+        }
+
+        .hero-tagline {
+            color: #cbd5e1;
+            width: 100%;
+            margin: 0 auto 2rem;
+            font-size: clamp(0.9rem, 2vw, 1.125rem);
+            line-height: 1.7;
+            padding: 0 0.5rem;
+        }
+
+        .hero-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            justify-content: center;
+            width: 100%;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        /* About Section */
+        .about-section {
+            padding: 3rem 1rem;
+            background: var(--white);
+            width: 100%;
+        }
+
+        .about-centered {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            width: 100%;
+        }
+
+        .centered-text {
+            text-align: center;
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 0.5rem;
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+            width: 100%;
+            max-width: 900px;
+        }
+
+        .skill-category {
+            background: var(--secondary-color);
+            padding: 1.25rem;
+            border-radius: 0.75rem;
+            border: 1px solid #e2e8f0;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+
+        .skill-items {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            width: 100%;
+        }
+
+        .skill-item {
+            padding: 0.375rem 0.75rem;
+            background: var(--white);
+            border: 1px solid #e2e8f0;
+            border-radius: 9999px;
+            font-size: 0.875rem;
+            color: #475569;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+
+        /* Projects Section */
+        .projects-section {
+            padding: 3rem 1rem;
+            background: var(--secondary-color);
+            width: 100%;
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            width: 100%;
+        }
+
+        .project-card {
+            background: var(--white);
+            border-radius: 0.75rem;
+            box-shadow: var(--shadow);
+            overflow: hidden;
+            transition: all 0.3s ease;
+            position: relative;
+            width: 100%;
+            max-width: 100%;
+        }
+
+        .project-slider-container {
+            position: relative;
+            overflow: hidden;
+            border-radius: 0.75rem 0.75rem 0 0;
+            height: 250px;
+            width: 100%;
+        }
+
+        .project-content {
+            padding: 1.25rem;
+            width: 100%;
+        }
+
+        .project-content h3 {
+            color: var(--text-dark);
+            font-size: clamp(1.1rem, 2vw, 1.25rem);
+            margin-bottom: 0.75rem;
+            line-height: 1.3;
+        }
+
+        .project-content p {
+            color: var(--text-light);
+            margin-bottom: 1rem;
+            line-height: 1.6;
+            font-size: 0.95rem;
+        }
+
+        .project-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .tag {
+            padding: 0.25rem 0.75rem;
+            background: #f3e8ff;
+            color: #7e22ce;
+            border-radius: 9999px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        /* Testimonials Section */
+        .testimonials-section {
+            padding: 3rem 1rem;
+            background: #0f172a;
+            width: 100%;
+        }
+
+        .testimonials-slider {
+            width: 100%;
+            height: auto;
+            padding: 20px 0;
+            margin: 0 auto;
+        }
+
+        /* Contact Section - إصلاح كامل للحقول */
+        .contact-section {
+            padding: 3rem 1rem;
+            background: var(--white);
+            width: 100%;
+        }
+
+        .contact-content {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+            width: 100%;
+        }
+
+        .contact-form-wrapper {
+            width: 100%;
+            max-width: 100%;
+        }
+
+        .contact-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            width: 100%;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+        }
+
+        .form-group label {
+            color: #334155;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            padding: 0.75rem;
+            border: 1px solid #cbd5e1;
+            border-radius: 0.5rem;
+            font-size: 1rem;
+            font-family: inherit;
+            transition: all 0.3s ease;
+            width: 100%;
+            max-width: 100%;
+            -webkit-appearance: none;
+            appearance: none;
+        }
+
+        /* تحسين مظهر الحقول على الهواتف */
+        @media (max-width: 768px) {
+            .form-group input,
+            .form-group textarea {
+                padding: 0.875rem;
+                font-size: 16px; /* منع التكبير في iOS */
+            }
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .btn-submit {
+            width: 100%;
+            background: linear-gradient(135deg, var(--whatsapp-green), var(--whatsapp-dark));
+            color: var(--white);
+            font-weight: 600;
+            padding: 1rem;
+            border: none;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            font-size: 1rem;
+        }
+
+        .contact-info {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            width: 100%;
+        }
+
+        .social-links {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            width: 100%;
+        }
+
+        .social-card,
+        .whatsapp-link {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            background: var(--secondary-color);
+            border-radius: 0.5rem;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+
+        .footer {
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid #e2e8f0;
+            text-align: center;
+            width: 100%;
+        }
+
+        /* تحسينات للهواتف المحمولة */
+        @media (max-width: 768px) {
+            .language-switch {
+                top: 10px;
+                left: 10px;
+                padding: 8px 12px;
+                font-size: 0.9rem;
+            }
+            
+            body[dir="ltr"] .language-switch {
+                right: 10px;
+            }
+            
+            .hero-buttons {
+                flex-direction: column;
+                align-items: stretch;
+                max-width: 300px;
+            }
+            
+            .btn {
+                width: 100%;
+                min-width: auto;
+                padding: 0.75rem 1rem;
+            }
+            
+            .skills-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+            
+            .projects-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+            
+            .project-slider-container {
+                height: 200px;
+            }
+            
+            .contact-content {
+                gap: 2rem;
+            }
+            
+            .hero-section {
+                padding: 4rem 1rem 2rem;
+            }
+            
+            .section-header {
+                margin-bottom: 2rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-name {
+                font-size: 1.75rem;
+            }
+            
+            .hero-title {
+                font-size: 1.1rem;
+            }
+            
+            .hero-tagline {
+                font-size: 0.9rem;
+            }
+            
+            .section-header h2 {
+                font-size: 1.5rem;
+            }
+            
+            .project-content h3 {
+                font-size: 1rem;
+            }
+            
+            .project-content p {
+                font-size: 0.85rem;
+            }
+            
+            .social-card,
+            .whatsapp-link {
+                padding: 0.75rem;
+            }
+            
+            .social-icon,
+            .whatsapp-icon {
+                min-width: 40px;
+                padding: 0.5rem;
+            }
+        }
+
+        @media (min-width: 769px) and (max-width: 1024px) {
+            .projects-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .contact-content {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (min-width: 1025px) {
+            .projects-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+            
+            .contact-content {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        /* إصلاح مشكلة التمرير الأفقي */
+        img, svg, video {
+            max-width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        /* إصلاحات للـ RTL */
+        body[dir="rtl"] {
+            text-align: right;
+        }
+        
+        body[dir="rtl"] .hero-buttons {
+            flex-direction: row-reverse;
+        }
+        
+        body[dir="rtl"] .skill-items {
+            flex-direction: row-reverse;
+        }
+        
+        body[dir="rtl"] .project-tags {
+            flex-direction: row-reverse;
+        }
+        
+        body[dir="rtl"] .social-card,
+        body[dir="rtl"] .whatsapp-link {
+            flex-direction: row-reverse;
+            text-align: right;
+        }
+
+        /* إصلاح Swiper في RTL */
+        body[dir="rtl"] .project-swiper-slide,
+        body[dir="rtl"] .project-swiper,
+        body[dir="rtl"] .testimonials-slider {
+            direction: ltr;
+        }
+
+        /* تحسين الأداء والتحميل */
+        .image-loading {
+            background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+            background-size: 200% 100%;
+            animation: loading 1.5s infinite;
+        }
+
+        @keyframes loading {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+
+        /* Animations */
+        .fade-in-up {
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body dir="rtl">
+    <!-- Language Switch Button -->
+    <div class="language-switch">
+        <button class="lang-btn" id="enBtn">EN</button>
+        <span class="lang-separator">|</span>
+        <button class="lang-btn active" id="arBtn">AR</button>
+    </div>
+
+    <!-- Hero Section -->
+    <section id="hero" class="hero-section">
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <p class="hero-greeting" data-en="Hello, I'm" data-ar="مرحباً، أنا">مرحباً، أنا</p>
+            <h1 class="hero-name">Dina Mohamed AbdElmaboud</h1>
+            <h2 class="hero-title" data-en="Front-End Developer" data-ar="مطورة واجهات أمامية">مطورة واجهات أمامية</h2>
+            <p class="hero-tagline" data-en="Creating exceptional digital experiences that combine aesthetic design with functional excellence. I transform ideas into elegant, responsive websites that users love." data-ar="أبدع تجارب ويب استثنائية تجمع بين التصميم الجذاب والأداء المتميز. أستخدم أحدث التقنيات لتحويل الأفكار إلى مواقع ويب سريعة الاستجابة وسهلة الاستخدام.">
+                أبدع تجارب ويب استثنائية تجمع بين التصميم الجذاب والأداء المتميز. أستخدم أحدث التقنيات لتحويل الأفكار إلى مواقع ويب سريعة الاستجابة وسهلة الاستخدام.
+            </p>
+            <div class="hero-buttons">
+                <button class="btn btn-primary" onclick="scrollToSection('projects')" data-en="View Projects" data-ar="مشاهدة المشاريع">مشاهدة المشاريع</button>
+                <button class="btn btn-secondary" onclick="scrollToSection('contact')" data-en="Contact Me" data-ar="تواصل معي">تواصل معي</button>
+            </div>
+        </div>
+        <div class="scroll-indicator">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about-section">
+        <div class="container about-centered">
+            <div class="section-header">
+                <h2 data-en="About Me" data-ar="معلومات عني">معلومات عني</h2>
+                <div class="section-divider"></div>
+                <p class="section-description"
+                   data-en="Front-end developer skilled in building modern, responsive, and user-focused web experiences."
+                   data-ar="مطورة واجهات أمامية ماهرة في إنشاء تجارب ويب حديثة وسريعة الاستجابة تركز على المستخدم.">
+                   مطورة واجهات أمامية ماهرة في إنشاء تجارب ويب حديثة وسريعة الاستجابة تركز على المستخدم.
+                </p>
+            </div>
+
+            <div class="about-text centered-text">
+                <h3 data-en="Front-End Developer & UI/UX Enthusiast"
+                    data-ar="مطورة واجهات أمامية ومهتمة بتجربة المستخدم">
+                    مطورة واجهات أمامية ومهتمة بتجربة المستخدم
+                </h3>
+
+                <p data-en="I create clean, responsive, and user-friendly websites using modern technologies. My focus is on writing high-quality code and turning designs into smooth and engaging digital experiences."
+                   data-ar="أقوم بإنشاء مواقع نظيفة، متجاوبة، وسهلة الاستخدام باستخدام أحدث التقنيات. أركز على كتابة كود عالي الجودة وتحويل التصاميم إلى تجارب رقمية سلسة وجذابة.">
+                   أقوم بإنشاء مواقع نظيفة، متجاوبة، وسهلة الاستخدام باستخدام أحدث التقنيات. أركز على كتابة كود عالي الجودة وتحويل التصاميم إلى تجارب رقمية سلسة وجذابة.
+                </p>
+
+                <p data-en="I enjoy problem-solving, improving user experience, and building interfaces that look great and perform perfectly on all devices."
+                   data-ar="أستمتع بحل المشكلات وتحسين تجربة المستخدم وبناء واجهات تبدو رائعة وتعمل بكفاءة على جميع الأجهزة.">
+                   أستمتع بحل المشكلات وتحسين تجربة المستخدم وبناء واجهات تبدو رائعة وتعمل بكفاءة على جميع الأجهزة.
+                </p>
+            </div>
+
+            <div class="skills-grid centered-skills">
+                <div class="skill-category">
+                    <div class="category-header">
+                        <i class="fas fa-code"></i>
+                        <h4 data-en="Frontend Development" data-ar="تطوير الواجهات الأمامية">
+                            تطوير الواجهات الأمامية
+                        </h4>
+                    </div>
+                    <div class="skill-items">
+                        <span class="skill-item">HTML5</span>
+                        <span class="skill-item">CSS3</span>
+                        <span class="skill-item">JavaScript</span>
+                        <span class="skill-item">React</span>
+                        <span class="skill-item">Tailwind CSS</span>
+                        <span class="skill-item">Bootstrap</span>
+                    </div>
+                </div>
+
+                <div class="skill-category">
+                    <div class="category-header">
+                        <i class="fas fa-palette"></i>
+                        <h4 data-en="UI/UX Design" data-ar="تصميم واجهة المستخدم">
+                            تصميم واجهة المستخدم
+                        </h4>
+                    </div>
+                    <div class="skill-items">
+                        <span class="skill-item">Figma</span>
+                        <span class="skill-item">Canva</span>
+                        <span class="skill-item">Responsive Design</span>
+                        <span class="skill-item">Prototyping</span>
+                    </div>
+                </div>
+
+                <div class="skill-category">
+                    <div class="category-header">
+                        <i class="fas fa-tools"></i>
+                        <h4 data-en="Tools & Technologies" data-ar="الأدوات والتقنيات">
+                            الأدوات والتقنيات
+                        </h4>
+                    </div>
+                    <div class="skill-items">
+                        <span class="skill-item">Git & GitHub</span>
+                        <span class="skill-item">Netlify</span>
+                        <span class="skill-item">VS Code</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="projects-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 data-en="Featured Projects" data-ar="المشاريع المميزة">المشاريع المميزة</h2>
+                <div class="section-divider"></div>
+                <p class="section-description" data-en="A showcase of my work, highlighting my skills in front-end development and UI/UX design." data-ar="مجموعة من أبرز أعمالي التي تعكس مهاراتي في تطوير الواجهات الأمامية وتصميم تجربة المستخدم.">
+                    مجموعة من أبرز أعمالي التي تعكس مهاراتي في تطوير الواجهات الأمامية وتصميم تجربة المستخدم.
+                </p>
+            </div>
+            
+            <div class="projects-grid">
+                <!-- Project 1: Shezlong Clinic -->
+                <div class="project-card fade-in-up">
+                    <div class="project-slider-container">
+                        <div class="swiper project-swiper project-swiper-1">
+                            <div class="swiper-wrapper">
+                                <div class="swiper-slide project-swiper-slide">
+                                    <img src="image/img (4).png" 
+                                         alt="Shezlong Clinic - الصفحة الرئيسية" 
+                                         data-alt-en="Shezlong Clinic - Homepage" 
+                                         data-alt-ar="شيزلونج - الصفحة الرئيسية"
+                                         class="project-swiper-image" loading="lazy">
+                                </div>
+                                <div class="swiper-slide project-swiper-slide">
+                                    <img src="image/img (5).png" 
+                                         alt="Shezlong Clinic - الخدمات" 
+                                         data-alt-en="Shezlong Clinic - Services" 
+                                         data-alt-ar="شيزلونج - الخدمات"
+                                         class="project-swiper-image" loading="lazy">
+                                </div>
+                            </div>
+                            <div class="swiper-pagination"></div>
+                        </div>
+                        <div class="project-overlay-icons">
+                            <a href="https://www.psychotherapy-sessions.com/" target="_blank" class="project-icon-link">
+                                <div class="icon-wrapper">
+                                    <i class="fas fa-external-link-alt"></i>
+                                </div>
+                                <span class="icon-label" data-en="Live Site" data-ar="الموقع الحي">الموقع الحي</span>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="project-content">
+                        <h3 data-en="Shezlong – Mental Health Clinic" data-ar="شيزلونج – عيادة الصحة النفسية">شيزلونج – عيادة الصحة النفسية</h3>
+                        <p data-en="Responsive website for a Bahraini mental health clinic, with booking form, services, and animations." data-ar="موقع ويب متجاوب لعيادة بحرينية متخصصة في الصحة النفسية، مع نموذج حجز مواعيد، صفحات الخدمات، وتأثيرات حركية.">
+                            موقع ويب متجاوب لعيادة بحرينية متخصصة في الصحة النفسية، مع نموذج حجز مواعيد، صفحات الخدمات، وتأثيرات حركية.
+                        </p>
+                        <div class="project-tags">
+                            <span class="tag">HTML5</span>
+                            <span class="tag">CSS3</span>
+                            <span class="tag">JavaScript</span>
+                            <span class="tag">Responsive</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 2: CloudBooks Tax -->
+                <div class="project-card fade-in-up">
+                    <div class="project-slider-container">
+                        <div class="swiper project-swiper project-swiper-2">
+                            <div class="swiper-wrapper">
+                                <div class="swiper-slide project-swiper-slide">
+                                    <img src="image/img1 (1).png" 
+                                         alt="CloudBooks Tax - الصفحة الرئيسية" 
+                                         data-alt-en="CloudBooks Tax - Homepage" 
+                                         data-alt-ar="كلاود بوكس - الصفحة الرئيسية"
+                                         class="project-swiper-image" loading="lazy">
+                                </div>
+                                <div class="swiper-slide project-swiper-slide">
+                                    <img src="image/img1 (2).png" 
+                                         alt="CloudBooks Tax - الخدمات" 
+                                         data-alt-en="CloudBooks Tax - Services" 
+                                         data-alt-ar="كلاود بوكس - الخدمات"
+                                         class="project-swiper-image" loading="lazy">
+                                </div>
+                            </div>
+                            <div class="swiper-pagination"></div>
+                        </div>
+                        <div class="project-overlay-icons">
+                            <a href="https://cloudbooksae.com/" target="_blank" class="project-icon-link">
+                                <div class="icon-wrapper">
+                                    <i class="fas fa-external-link-alt"></i>
+                                </div>
+                                <span class="icon-label" data-en="Live Site" data-ar="الموقع الحي">الموقع الحي</span>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="project-content">
+                        <h3 data-en="CloudBooks – Tax Company" data-ar="كلاود بوكس – شركة ضرائب">كلاود بوكس – شركة ضرائب</h3>
+                        <p data-en="Professional website for a UAE tax company using HTML, CSS, JavaScript, and Tailwind CSS." data-ar="موقع احترافي لشركة إماراتية متخصصة في المحاسبة والضرائب باستخدام HTML، CSS، JavaScript، وتايلويند CSS.">
+                            موقع احترافي لشركة إماراتية متخصصة في المحاسبة والضرائب باستخدام HTML، CSS، JavaScript، وتايلويند CSS.
+                        </p>
+                        <div class="project-tags">
+                            <span class="tag">HTML5</span>
+                            <span class="tag">CSS3</span>
+                            <span class="tag">JavaScript</span>
+                            <span class="tag">Tailwind</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 3: WA360 Consulting -->
+                <div class="project-card fade-in-up">
+                    <div class="project-slider-container">
+                        <div class="swiper project-swiper project-swiper-3">
+                            <div class="swiper-wrapper">
+                                <div class="swiper-slide project-swiper-slide">
+                                    <img src="image/img (13).png" 
+                                         alt="WA360 Consulting - الصفحة الرئيسية" 
+                                         data-alt-en="WA360 Consulting - Homepage" 
+                                         data-alt-ar="WA360 - الصفحة الرئيسية"
+                                         class="project-swiper-image" loading="lazy">
+                                </div>
+                                <div class="swiper-slide project-swiper-slide">
+                                    <img src="image/img (14).png" 
+                                         alt="WA360 Consulting - الخدمات" 
+                                         data-alt-en="WA360 Consulting - Services" 
+                                         data-alt-ar="WA360 - الخدمات"
+                                         class="project-swiper-image" loading="lazy">
+                                </div>
+                                <div class="swiper-slide project-swiper-slide">
+                                    <img src="image/img.png" 
+                                         alt="WA360 Consulting - المنهجية" 
+                                         data-alt-en="WA360 Consulting - Methodology" 
+                                         data-alt-ar="WA360 - المنهجية"
+                                         class="project-swiper-image" loading="lazy">
+                                </div>
+                            </div>
+                            <div class="swiper-pagination"></div>
+                        </div>
+                        <div class="project-overlay-icons">
+                            <a href="https://waled-elatar.netlify.app/" target="_blank" class="project-icon-link">
+                                <div class="icon-wrapper">
+                                    <i class="fas fa-external-link-alt"></i>
+                                </div>
+                                <span class="icon-label" data-en="Live Site" data-ar="الموقع الحي">الموقع الحي</span>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="project-content">
+                        <h3 data-en="WA360 – Business Consulting" data-ar="WA360 – استشارات الأعمال">WA360 – استشارات الأعمال</h3>
+                        <p data-en="Multi-page consulting website with service sections, methodology pages, and responsive design." data-ar="موقع متعدد الصفحات لشركة استشارات أعمال مع أقسام الخدمات، صفحات المنهجية، وتصميم متجاوب تماماً.">
+                            موقع متعدد الصفحات لشركة استشارات أعمال مع أقسام الخدمات، صفحات المنهجية، وتصميم متجاوب تماماً.
+                        </p>
+                        <div class="project-tags">
+                            <span class="tag">HTML5</span>
+                            <span class="tag">CSS3</span>
+                            <span class="tag">Tailwind</span>
+                            <span class="tag">JavaScript</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 4: Athar Marketing -->
+                <div class="project-card fade-in-up">
+                    <div class="project-slider-container">
+                        <div class="swiper project-swiper project-swiper-4">
+                            <div class="swiper-wrapper">
+                                <div class="swiper-slide project-swiper-slide">
+                                    <img src="image/img (15).png" 
+                                         alt="Athar Marketing - الصفحة الرئيسية" 
+                                         data-alt-en="Athar Marketing - Homepage" 
+                                         data-alt-ar="أثر - الصفحة الرئيسية"
+                                         class="project-swiper-image" loading="lazy">
+                                </div>
+                                <div class="swiper-slide project-swiper-slide">
+                                    <img src="image/img (2).png" 
+                                         alt="Athar Marketing - الأعمال" 
+                                         data-alt-en="Athar Marketing - Portfolio" 
+                                         data-alt-ar="أثر - الأعمال"
+                                         class="project-swiper-image" loading="lazy">
+                                </div>
+                            </div>
+                            <div class="swiper-pagination"></div>
+                        </div>
+                        <div class="project-overlay-icons">
+                            <a href="https://ather-markting.netlify.app/" target="_blank" class="project-icon-link">
+                                <div class="icon-wrapper">
+                                    <i class="fas fa-external-link-alt"></i>
+                                </div>
+                                <span class="icon-label" data-en="Live Site" data-ar="الموقع الحي">الموقع الحي</span>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="project-content">
+                        <h3 data-en="Athar – Marketing Agency" data-ar="أثر – وكالة تسويقية">أثر – وكالة تسويقية</h3>
+                        <p data-en="Creative marketing website with modern UI/UX, animations, and interactive components." data-ar="موقع تسويق إبداعي بتصميم حديث لواجهة المستخدم، تأثيرات حركية، ومكونات تفاعلية جذابة.">
+                            موقع تسويق إبداعي بتصميم حديث لواجهة المستخدم، تأثيرات حركية، ومكونات تفاعلية جذابة.
+                        </p>
+                        <div class="project-tags">
+                            <span class="tag">HTML5</span>
+                            <span class="tag">CSS3</span>
+                            <span class="tag">JavaScript</span>
+                            <span class="tag">Animations</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 5: Construction Company -->
+                <div class="project-card fade-in-up">
+                    <div class="project-slider-container">
+                        <div class="swiper project-swiper project-swiper-5">
+                            <div class="swiper-wrapper">
+                                <div class="swiper-slide project-swiper-slide">
+                                    <img src="image/img (8).png" 
+                                         alt="Construction Company - الصفحة الرئيسية" 
+                                         data-alt-en="Construction Company - Homepage" 
+                                         data-alt-ar="شركة مقاولات - الصفحة الرئيسية"
+                                         class="project-swiper-image" loading="lazy">
+                                </div>
+                                <div class="swiper-slide project-swiper-slide">
+                                    <img src="image/img (9).png" 
+                                         alt="Construction Company - الخدمات" 
+                                         data-alt-en="Construction Company - Services" 
+                                         data-alt-ar="شركة مقاولات - الخدمات"
+                                         class="project-swiper-image" loading="lazy">
+                                </div>
+                                <div class="swiper-slide project-swiper-slide">
+                                    <img src="image/img (10).png" 
+                                         alt="Construction Company - المشاريع" 
+                                         data-alt-en="Construction Company - Projects" 
+                                         data-alt-ar="شركة مقاولات - المشاريع"
+                                         class="project-swiper-image" loading="lazy">
+                                </div>
+                            </div>
+                            <div class="swiper-pagination"></div>
+                        </div>
+                        <div class="project-overlay-icons">
+                            <a href="https://bunna-alula.netlify.app/" target="_blank" class="project-icon-link">
+                                <div class="icon-wrapper">
+                                    <i class="fas fa-external-link-alt"></i>
+                                </div>
+                                <span class="icon-label" data-en="Live Site" data-ar="الموقع الحي">الموقع الحي</span>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="project-content">
+                        <h3 data-en="Construction Company Website" data-ar="موقع شركة مقاولات">موقع شركة مقاولات</h3>
+                        <p data-en="Complete website for a construction company with project portfolio and contact form." data-ar="موقع متكامل لشركة مقاولات مع معرض للمشاريع، نموذج اتصل بنا، وتصميم احترافي يعكس طبيعة العمل.">
+                            موقع متكامل لشركة مقاولات مع معرض للمشاريع، نموذج اتصل بنا، وتصميم احترافي يعكس طبيعة العمل.
+                        </p>
+                        <div class="project-tags">
+                            <span class="tag">HTML5</span>
+                            <span class="tag">CSS3</span>
+                            <span class="tag">JavaScript</span>
+                            <span class="tag">Portfolio</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 6: My Homemade Restaurant -->
+                <div class="project-card fade-in-up">
+                    <div class="project-slider-container">
+                        <div class="swiper project-swiper project-swiper-6">
+                            <div class="swiper-wrapper">
+                                <div class="swiper-slide project-swiper-slide">
+                                    <img src="image/img (6).png" 
+                                         alt="My Homemade Restaurant - الصفحة الرئيسية" 
+                                         data-alt-en="My Homemade Restaurant - Homepage" 
+                                         data-alt-ar="مطعمي البيتي - الصفحة الرئيسية"
+                                         class="project-swiper-image" loading="lazy">
+                                </div>
+                                <div class="swiper-slide project-swiper-slide">
+                                    <img src="image/img (7).png" 
+                                         alt="My Homemade Restaurant - القائمة" 
+                                         data-alt-en="My Homemade Restaurant - Menu" 
+                                         data-alt-ar="مطعمي البيتي - القائمة"
+                                         class="project-swiper-image" loading="lazy">
+                                </div>
+                            </div>
+                            <div class="swiper-pagination"></div>
+                        </div>
+                        <div class="project-overlay-icons">
+                            <a href="https://baty.netlify.app/" target="_blank" class="project-icon-link">
+                                <div class="icon-wrapper">
+                                    <i class="fas fa-external-link-alt"></i>
+                                </div>
+                                <span class="icon-label" data-en="Live Site" data-ar="الموقع الحي">الموقع الحي</span>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="project-content">
+                        <h3 data-en="My Homemade Restaurant" data-ar="مطعمي البيتي">مطعمي البيتي</h3>
+                        <p data-en="A friendly, responsive website showcasing my homemade restaurant menu, ordering, and contact info." data-ar="موقع ودود ومتجاوب لعرض قائمة المطعم البيتي، نظام الطلبات، ومعلومات الاتصال بتصميم جذاب وسهل الاستخدام.">
+                            موقع ودود ومتجاوب لعرض قائمة المطعم البيتي، نظام الطلبات، ومعلومات الاتصال بتصميم جذاب وسهل الاستخدام.
+                        </p>
+                        <div class="project-tags">
+                            <span class="tag">HTML5</span>
+                            <span class="tag">CSS3</span>
+                            <span class="tag">JavaScript</span>
+                            <span class="tag">E-commerce</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Project 7: Sociology College - Tafahna Al-Ashraf -->
+                <div class="project-card fade-in-up">
+                    <div class="project-slider-container">
+                        <div class="swiper project-swiper project-swiper-7">
+                            <div class="swiper-wrapper">
+                                <div class="swiper-slide project-swiper-slide">
+                                    <img src="image/img1 (4).png" 
+                                         alt="College Sociology - الصفحة الرئيسية" 
+                                         data-alt-en="Sociology College - Homepage" 
+                                         data-alt-ar="كلية علم الاجتماع - الصفحة الرئيسية"
+                                         class="project-swiper-image" loading="lazy">
+                                </div>
+                                <div class="swiper-slide project-swiper-slide">
+                                    <img src="image/img1 (3).png" 
+                                         alt="College Sociology - الصفحات الداخلية" 
+                                         data-alt-en="Sociology College - Inner Pages" 
+                                         data-alt-ar="كلية علم الاجتماع - الصفحات الداخلية"
+                                         class="project-swiper-image" loading="lazy">
+                                </div>
+                            </div>
+                            <div class="swiper-pagination"></div>
+                        </div>
+
+                        <div class="project-overlay-icons">
+                            <a href="https://college-sociology-tafahna.netlify.app/" target="_blank" class="project-icon-link">
+                                <div class="icon-wrapper">
+                                    <i class="fas fa-external-link-alt"></i>
+                                </div>
+                                <span class="icon-label" data-en="Live Site" data-ar="الموقع الحي">الموقع الحي</span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="project-content">
+                        <h3 data-en="Sociology College Website" data-ar="موقع كلية علم الاجتماع - تفهنا الأشراف">
+                            موقع كلية علم الاجتماع - تفهنا الأشراف
+                        </h3>
+
+                        <p data-en="A professional and responsive website designed for the Sociology College in Tafahna Al-Ashraf. Includes programs, departments, student services, achievements, and contact information arranged in a clean, elegant UI."
+                           data-ar="موقع احترافي ومتجاوب صممته لكلية علم الاجتماع بتفهنا الأشراف، يحتوي على البرامج والأقسام وخدمات الطلاب والإنجازات ومعلومات التواصل، بتصميم منظم وواجهة أنيقة وسهلة الاستخدام.">
+                            موقع احترافي ومتجاوب صممته لكلية علم الاجتماع بتفهنا الأشراف، يحتوي على البرامج والأقسام وخدمات الطلاب والإنجازات ومعلومات التواصل، بتصميم منظم وواجهة أنيقة وسهلة الاستخدام.
+                        </p>
+
+                        <div class="project-tags">
+                            <span class="tag">HTML5</span>
+                            <span class="tag">CSS3</span>
+                            <span class="tag">JavaScript</span>
+                            <span class="tag">Responsive</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section id="testimonials" class="testimonials-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="text-white" data-en="Client Testimonials" data-ar="آراء العملاء">آراء العملاء</h2>
+                <div class="section-divider"></div>
+                <p class="section-description text-light" data-en="Don't just take my word for it. Here's what clients say about working with me." data-ar="لا تأخذ كلامي فقط. إليك ما يقوله العملاء عن العمل معي.">
+                    لا تأخذ كلامي فقط. إليك ما يقوله العملاء عن العمل معي.
+                </p>
+            </div>
+
+            <div class="swiper testimonials-slider">
+                <div class="swiper-wrapper">
+                    <!-- Testimonial Images -->
+                    <div class="swiper-slide">
+                        <div class="testimonial-image-card">
+                            <img src="image/client (1).png" 
+                                 alt="رأي العميل 1" 
+                                 data-alt-en="Client Testimonial 1" 
+                                 data-alt-ar="رأي العميل 1"
+                                 class="testimonial-image" loading="lazy">
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="testimonial-image-card">
+                            <img src="image/client (2).png" 
+                                 alt="رأي العميل 2" 
+                                 data-alt-en="Client Testimonial 2" 
+                                 data-alt-ar="رأي العميل 2"
+                                 class="testimonial-image" loading="lazy">
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="testimonial-image-card">
+                            <img src="image/client (3).png" 
+                                 alt="رأي العميل 3" 
+                                 data-alt-en="Client Testimonial 3" 
+                                 data-alt-ar="رأي العميل 3"
+                                 class="testimonial-image" loading="lazy">
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="testimonial-image-card">
+                            <img src="image/client (7).png" 
+                                 alt="رأي العميل 4" 
+                                 data-alt-en="Client Testimonial 4" 
+                                 data-alt-ar="رأي العميل 4"
+                                 class="testimonial-image" loading="lazy">
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="testimonial-image-card">
+                            <img src="image/client (4).png" 
+                                 alt="رأي العميل 5" 
+                                 data-alt-en="Client Testimonial 5" 
+                                 data-alt-ar="رأي العميل 5"
+                                 class="testimonial-image" loading="lazy">
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="testimonial-image-card">
+                            <img src="image/client (5).png" 
+                                 alt="رأي العميل 6" 
+                                 data-alt-en="Client Testimonial 6" 
+                                 data-alt-ar="رأي العميل 6"
+                                 class="testimonial-image" loading="lazy">
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="testimonial-image-card">
+                            <img src="image/client (6).png" 
+                                 alt="رأي العميل 7" 
+                                 data-alt-en="Client Testimonial 7" 
+                                 data-alt-ar="رأي العميل 7"
+                                 class="testimonial-image" loading="lazy">
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Navigation Buttons -->
+                <div class="swiper-button-next"></div>
+                <div class="swiper-button-prev"></div>
+                
+                <!-- Pagination -->
+                <div class="swiper-pagination"></div>
+            </div>
+        </div>
+    </section>
+
+   <!-- Contact Section -->
+<section id="contact" class="contact-section">
+    <div class="container">
+        <div class="section-header">
+            <h2 data-en="Get In Touch" data-ar="تواصل معي">تواصل معي</h2>
+            <div class="section-divider"></div>
+            <p class="section-description" data-en="Have a project in mind? Let's work together to create something amazing." data-ar="هل لديك مشروع في ذهنك؟ دعنا نعمل معًا لإنشاء شيء رائع.">
+                هل لديك مشروع في ذهنك؟ دعنا نعمل معًا لإنشاء شيء رائع.
+            </p>
+        </div>
+        
+        <div class="contact-content">
+            <!-- Contact Form - WhatsApp Only -->
+            <div class="contact-form-wrapper">
+                <div class="whatsapp-form-header" style="display: flex; align-items: center; gap: 1rem; margin-bottom: 2rem; padding: 1rem; background: #e8f5e8; border-radius: 0.5rem; border: 1px solid #c8e6c9;">
+                    <div style="background: #25d366; color: white; width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                        <i class="fab fa-whatsapp fa-lg"></i>
+                    </div>
+                    <div>
+                        <h3 style="color: #1e293b; margin-bottom: 0.5rem;" data-en="Send via WhatsApp" data-ar="إرسال عبر واتساب">
+                            إرسال عبر واتساب
+                        </h3>
+                        <p style="color: #64748b; font-size: 0.9rem;" data-en="Fill the form below and your message will open directly in WhatsApp" data-ar="املأ النموذج أدناه وسيتم فتح رسالتك مباشرة في واتساب">
+                            املأ النموذج أدناه وسيتم فتح رسالتك مباشرة في واتساب
+                        </p>
+                    </div>
+                </div>
+                
+                <form id="contactForm" class="contact-form">
+                    <div class="form-group">
+                        <label for="name" data-en="Name" data-ar="الاسم">الاسم</label>
+                        <input type="text" id="name" name="name" required placeholder="أدخل اسمك">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="email" data-en="Email (Optional)" data-ar="البريد الإلكتروني (اختياري)">البريد الإلكتروني (اختياري)</label>
+                        <input type="email" id="email" name="email" placeholder="example@email.com">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="subject" data-en="Subject" data-ar="الموضوع">الموضوع</label>
+                        <input type="text" id="subject" name="subject" required placeholder="موضوع الرسالة">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="message" data-en="Message" data-ar="الرسالة">الرسالة</label>
+                        <textarea id="message" name="message" rows="5" required placeholder="أخبرني عن مشروعك..."></textarea>
+                    </div>
+                    
+                    <button type="submit" class="btn-submit" style="background: linear-gradient(135deg, #25d366, #128C7E);">
+                        <i class="fab fa-whatsapp"></i>
+                        <span data-en="Open in WhatsApp" data-ar="فتح في واتساب">فتح في واتساب</span>
+                    </button>
+                    
+                    <div id="successMessage" class="success-message" style="background: #e8f5e8; border-color: #c8e6c9; color: #2e7d32; display: none;">
+                        <i class="fab fa-whatsapp" style="margin-left: 0.5rem;"></i>
+                        <span data-en="Opening WhatsApp... Please send your message there." data-ar="جاري فتح الواتساب... يرجى إرسال رسالتك هناك.">
+                            جاري فتح الواتساب... يرجى إرسال رسالتك هناك.
+                        </span>
+                    </div>
+                </form>
+            </div>
+            
+            <!-- Contact Info -->
+            <div class="contact-info">
+                <div class="contact-intro">
+                    <h3 data-en="Let's Connect" data-ar="لنتواصل">لنتواصل</h3>
+                    <p data-en="I'm always interested in hearing about new projects and opportunities. Whether you have a question or just want to say hi, feel free to reach out!" data-ar="أنا دائمًا مهتمة بسماع أفكار المشاريع الجديدة والفرص المتاحة. سواء كان لديك سؤال أو تريد فقط الترحيب، لا تتردد في التواصل معي!">
+                        أنا دائمًا مهتمة بسماع أفكار المشاريع الجديدة والفرص المتاحة. سواء كان لديك سؤال أو تريد فقط الترحيب، لا تتردد في التواصل معي!
+                    </p>
+                    <p style="margin-top: 1rem; color: #128C7E; font-weight: 600;">
+                        <i class="fab fa-whatsapp"></i>
+                        <span data-en="Available for contact via WhatsApp" data-ar="متاحة للتواصل عبر واتساب">
+                            متاحة للتواصل عبر واتساب
+                        </span>
+                    </p>
+                </div>
+                
+                <div class="social-links">
+                    <a href="https://wa.me/201033258639" target="_blank" class="whatsapp-link" style="margin-top: 0;">
+                        <div class="whatsapp-icon">
+                            <i class="fab fa-whatsapp"></i>
+                        </div>
+                        <div>
+                            <p class="whatsapp-text" data-en="WhatsApp Direct" data-ar="واتساب مباشر">واتساب مباشر</p>
+                            <p class="whatsapp-number">+20 103 325 8639</p>
+                            <p class="social-subtitle" style="color: #25d366; font-size: 0.8rem;">
+                                <i class="fas fa-clock"></i>
+                                <span data-en="Fast response" data-ar="رد سريع">رد سريع</span>
+                            </p>
+                        </div>
+                    </a>
+                    
+                    <a href="mailto:dina.saleh2311@gmail.com" class="social-card">
+                        <div class="social-icon" style="background: #f3f4f6;">
+                            <i class="fas fa-envelope" style="color: #ea4335;"></i>
+                        </div>
+                        <div>
+                            <p class="social-title" data-en="Email" data-ar="البريد الإلكتروني">البريد الإلكتروني</p>
+                            <p class="social-subtitle">dina.saleh2311@gmail.com</p>
+                        </div>
+                    </a>
+                    
+                    <a href="https://www.linkedin.com/in/dina-abdelmaboud-bb3208363" target="_blank" class="social-card">
+                        <div class="social-icon" style="background: #f3f4f6;">
+                            <i class="fab fa-linkedin" style="color: #0a66c2;"></i>
+                        </div>
+                        <div>
+                            <p class="social-title">LinkedIn</p>
+                            <p class="social-subtitle">linkedin.com/in/dina-abdelmaboud</p>
+                        </div>
+                    </a>
+                    
+                    <a href="https://github.com/dina-19-co" target="_blank" class="social-card">
+                        <div class="social-icon" style="background: #f3f4f6;">
+                            <i class="fas fa-cloud" style="color: #333;"></i>
+                        </div>
+                        <div>
+                            <p class="social-title">GitHub</p>
+                            <p class="social-subtitle">View My Projects</p>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Footer -->
+        <div class="footer">
+            <p>© 2025 دينا محمد - مطورة واجهات أمامية | Dina Mohamed - Front-End Developer Portfolio. جميع الحقوق محفوظة.</p>
+        </div>
+    </div>
+</section>
+
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        'use strict';
+        
+        // Initialize all Swiper sliders
+        const projectSwipers = [];
+        for (let i = 1; i <= 7; i++) {
+            const swiper = new Swiper(`.project-swiper-${i}`, {
+                loop: true,
+                autoplay: {
+                    delay: 4000,
+                    disableOnInteraction: false,
+                    pauseOnMouseEnter: true,
+                },
+                speed: 800,
+                effect: 'slide',
+                pagination: {
+                    el: `.project-swiper-${i} .swiper-pagination`,
+                    clickable: true,
+                    dynamicBullets: true,
+                },
+                allowTouchMove: true,
+                grabCursor: true,
+                slidesPerView: 1,
+                spaceBetween: 0,
+            });
+            projectSwipers.push(swiper);
+        }
+
+        // Testimonials swiper
+        const testimonialSwiper = new Swiper('.testimonials-slider', {
+            loop: true,
+            slidesPerView: 1,
+            spaceBetween: 30,
+            centeredSlides: true,
+            pagination: {
+                el: '.swiper-pagination',
+                clickable: true,
+                dynamicBullets: true,
+            },
+            navigation: {
+                nextEl: '.swiper-button-next',
+                prevEl: '.swiper-button-prev',
+            },
+            autoplay: {
+                delay: 5000,
+                disableOnInteraction: false,
+                pauseOnMouseEnter: true,
+            },
+            breakpoints: {
+                640: {
+                    slidesPerView: 2,
+                    spaceBetween: 20,
+                },
+                1024: {
+                    slidesPerView: 3,
+                    spaceBetween: 30,
+                    centeredSlides: false,
+                },
+            }
+        });
+
+        // Language switching functionality
+        const enBtn = document.getElementById('enBtn');
+        const arBtn = document.getElementById('arBtn');
+        let currentLang = 'ar';
+        
+        function switchLanguage(lang) {
+            currentLang = lang;
+            
+            // Update button states
+            if (lang === 'en') {
+                enBtn.classList.add('active');
+                arBtn.classList.remove('active');
+                document.body.dir = 'ltr';
+                document.documentElement.lang = 'en';
+            } else {
+                arBtn.classList.add('active');
+                enBtn.classList.remove('active');
+                document.body.dir = 'rtl';
+                document.documentElement.lang = 'ar';
+            }
+            
+            // Update all elements with data attributes
+            document.querySelectorAll('[data-en]').forEach(element => {
+                if (lang === 'en') {
+                    element.textContent = element.getAttribute('data-en');
+                } else {
+                    element.textContent = element.getAttribute('data-ar');
+                }
+            });
+            
+            // Update placeholders
+            const placeholders = {
+                'en': {
+                    'name': 'Your name',
+                    'email': 'your.email@example.com (optional)',
+                    'subject': 'Project inquiry',
+                    'message': 'Tell me about your project...'
+                },
+                'ar': {
+                    'name': 'أدخل اسمك',
+                    'email': 'example@email.com (اختياري)',
+                    'subject': 'موضوع الرسالة',
+                    'message': 'أخبرني عن مشروعك...'
+                }
+            };
+            
+            document.getElementById('name').placeholder = placeholders[lang].name;
+            document.getElementById('email').placeholder = placeholders[lang].email;
+            document.getElementById('subject').placeholder = placeholders[lang].subject;
+            document.getElementById('message').placeholder = placeholders[lang].message;
+            
+            // Save language preference to localStorage
+            localStorage.setItem('portfolio-lang', lang);
+            
+            // Update image alt texts based on language
+            updateImageAlts(lang);
+        }
+        
+        function updateImageAlts(lang) {
+            // Update project images alt texts
+            const projectImages = document.querySelectorAll('.project-swiper-image');
+            projectImages.forEach(img => {
+                const altEn = img.getAttribute('data-alt-en');
+                const altAr = img.getAttribute('data-alt-ar');
+                if (altEn && altAr) {
+                    img.alt = lang === 'en' ? altEn : altAr;
+                }
+            });
+            
+            // Update testimonial images alt texts
+            const testimonialImages = document.querySelectorAll('.testimonial-image');
+            testimonialImages.forEach(img => {
+                const altEn = img.getAttribute('data-alt-en');
+                const altAr = img.getAttribute('data-alt-ar');
+                if (altEn && altAr) {
+                    img.alt = lang === 'en' ? altEn : altAr;
+                }
+            });
+        }
+        
+        // Initialize image alt texts
+        updateImageAlts(currentLang);
+        
+        // Button event listeners
+        enBtn.addEventListener('click', () => switchLanguage('en'));
+        arBtn.addEventListener('click', () => switchLanguage('ar'));
+        
+        // Check for saved language preference
+        const savedLang = localStorage.getItem('portfolio-lang');
+        if (savedLang) {
+            switchLanguage(savedLang);
+        }
+        
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+        
+        // Function for scrolling to sections
+        window.scrollToSection = function(sectionId) {
+            const section = document.getElementById(sectionId);
+            if (section) {
+                section.scrollIntoView({ behavior: 'smooth' });
+            }
+        };
+        
+        // WhatsApp Form handling
+        const form = document.getElementById('contactForm');
+        const successMessage = document.getElementById('successMessage');
+        
+        if (form) {
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const submitBtn = form.querySelector('.btn-submit');
+                const originalText = submitBtn.innerHTML;
+                
+                submitBtn.disabled = true;
+                submitBtn.innerHTML = currentLang === 'en' 
+                    ? '<i class="fas fa-spinner fa-spin"></i> Opening WhatsApp...' 
+                    : '<i class="fas fa-spinner fa-spin"></i> جاري فتح الواتساب...';
+                
+                // Hide previous messages
+                successMessage.style.display = 'none';
+                
+                // Get form data
+                const name = document.getElementById('name').value.trim();
+                const email = document.getElementById('email').value.trim();
+                const subject = document.getElementById('subject').value.trim();
+                const message = document.getElementById('message').value.trim();
+                
+                // Validation
+                if (!name || !subject || !message) {
+                    alert(currentLang === 'en' 
+                        ? 'Please fill in all required fields (Name, Subject, Message)' 
+                        : 'يرجى ملء جميع الحقول المطلوبة (الاسم، الموضوع، الرسالة)');
+                    
+                    submitBtn.disabled = false;
+                    submitBtn.innerHTML = originalText;
+                    return;
+                }
+                
+                // Build WhatsApp message
+                let whatsappMessage = '';
+                
+                if (currentLang === 'en') {
+                    whatsappMessage = `Hello Dina,\n\n`;
+                    whatsappMessage += `I'm ${name}\n`;
+                    if (email) whatsappMessage += `Email: ${email}\n`;
+                    whatsappMessage += `\nSubject: ${subject}\n\n`;
+                    whatsappMessage += `${message}\n\n`;
+                    whatsappMessage += `Looking forward to hearing from you!`;
+                } else {
+                    whatsappMessage = `مرحباً دينا،\n\n`;
+                    whatsappMessage += `أنا ${name}\n`;
+                    if (email) whatsappMessage += `البريد الإلكتروني: ${email}\n`;
+                    whatsappMessage += `\nالموضوع: ${subject}\n\n`;
+                    whatsappMessage += `${message}\n\n`;
+                    whatsappMessage += `أتطلع لسماع ردك!`;
+                }
+                
+                // Encode message for URL
+                const encodedMessage = encodeURIComponent(whatsappMessage);
+                const whatsappUrl = `https://wa.me/201033258639?text=${encodedMessage}`;
+                
+                // Show success message
+                successMessage.style.display = 'block';
+                
+                // Open WhatsApp in new tab after short delay
+                setTimeout(() => {
+                    window.open(whatsappUrl, '_blank');
+                    
+                    // Reset form after sending
+                    setTimeout(() => {
+                        form.reset();
+                        submitBtn.disabled = false;
+                        submitBtn.innerHTML = originalText;
+                    }, 1000);
+                }, 1500);
+                
+                // Hide success message after 5 seconds
+                setTimeout(() => {
+                    successMessage.style.display = 'none';
+                }, 5000);
+            });
+        }
+        
+        // Parallax effect for hero section
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const hero = document.querySelector('.hero-content');
+            if (hero && scrolled < window.innerHeight) {
+                hero.style.transform = 'translateY(' + (scrolled * 0.3) + 'px)';
+                hero.style.opacity = 1 - (scrolled / window.innerHeight) * 0.5;
+            }
+        });
+        
+        // Animate skill items on hover
+        const skillItems = document.querySelectorAll('.skill-item');
+        skillItems.forEach(item => {
+            item.addEventListener('mouseenter', function() {
+                this.style.transform = 'scale(1.05) translateY(-2px)';
+            });
+            
+            item.addEventListener('mouseleave', function() {
+                this.style.transform = 'scale(1)';
+            });
+        });
+        
+        // Image loading handling
+        const images = document.querySelectorAll('img');
+        images.forEach(img => {
+            img.addEventListener('load', function() {
+                this.classList.remove('image-loading');
+            });
+            
+            img.addEventListener('error', function() {
+                this.classList.remove('image-loading');
+                const altText = this.alt || 'Image not available';
+                this.alt = altText;
+            });
+            
+            if (!img.complete) {
+                img.classList.add('image-loading');
+            }
+        });
+        
+        // Add WhatsApp icon animation
+        const whatsappIcon = document.querySelector('.whatsapp-icon i');
+        if (whatsappIcon) {
+            setInterval(() => {
+                whatsappIcon.style.transform = 'scale(1.1)';
+                setTimeout(() => {
+                    whatsappIcon.style.transform = 'scale(1)';
+                }, 500);
+            }, 3000);
+        }
+        
+        // Prevent horizontal scroll on touch devices
+        document.body.addEventListener('touchmove', function(e) {
+            if (e.touches.length > 1) {
+                e.preventDefault();
+            }
+        }, { passive: false });
+        
+        // Fix for iOS viewport issues
+        function setViewportHeight() {
+            let vh = window.innerHeight * 0.01;
+            document.documentElement.style.setProperty('--vh', `${vh}px`);
+        }
+        
+        window.addEventListener('resize', setViewportHeight);
+        window.addEventListener('orientationchange', setViewportHeight);
+        setViewportHeight();
+    });
+</script>
+</body>
+</html>
